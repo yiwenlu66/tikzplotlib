@@ -1,6 +1,7 @@
 import datetime
 
 import numpy as np
+import re
 from matplotlib.dates import num2date
 
 from . import _color as mycol
@@ -100,7 +101,8 @@ def draw_line2d(data, obj):
     content += c
 
     if legend_text is not None:
-        content.append(f"\\addlegendentry{{{legend_text}}}\n")
+        legend_text_escaped = re.sub(r"(\d+(\.\d+)?)%", r"\\SI{\1}{\\percent}", legend_text)
+        content.append(f"\\addlegendentry{{{legend_text_escaped}}}\n")
 
     return data, content
 

@@ -1,5 +1,6 @@
 import matplotlib as mpl
 import numpy as np
+import re
 from matplotlib.backends.backend_pgf import (
     common_texification as mpl_common_texification,
 )
@@ -51,7 +52,7 @@ class Axes:
             xlabel = _common_texification(xlabel)
 
             labelcolor = obj.xaxis.label.get_c()
-
+            xlabel = re.sub(r"\smm", r" \\si{\\mm}", xlabel)
             if labelcolor != "black":
                 data, col, _ = _color.mpl_color2xcolor(data, labelcolor)
                 self.axis_options.append(f"xlabel=\\textcolor{{{col}}}{{{xlabel}}}")
