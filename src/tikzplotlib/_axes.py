@@ -53,6 +53,11 @@ class Axes:
 
             labelcolor = obj.xaxis.label.get_c()
             xlabel = re.sub(r"\smm", r" \\si{\\mm}", xlabel)
+            xlabel_spl = xlabel.split(",")
+            if len(xlabel_spl) == 2:
+                xlabel = ",".join(["$" + xlabel_spl[0].replace(" ", "\\ ") + "$",
+                                   xlabel_spl[1]])
+
             if labelcolor != "black":
                 data, col, _ = _color.mpl_color2xcolor(data, labelcolor)
                 self.axis_options.append(f"xlabel=\\textcolor{{{col}}}{{{xlabel}}}")
@@ -66,6 +71,11 @@ class Axes:
         ylabel = obj.get_ylabel()
         if ylabel:
             ylabel = _common_texification(ylabel)
+
+            ylabel_spl = ylabel.split(",")
+            if len(ylabel_spl) == 2:
+                ylabel = ",".join(["$" + ylabel_spl[0].replace(" ", "\\ ") + "$",
+                                   ylabel_spl[1]])
 
             labelcolor = obj.yaxis.label.get_c()
             if labelcolor != "black":
