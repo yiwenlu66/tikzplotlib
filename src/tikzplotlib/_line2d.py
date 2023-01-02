@@ -101,7 +101,9 @@ def draw_line2d(data, obj):
     content += c
 
     if legend_text is not None:
-        legend_text_escaped = re.sub(r"(\d+(\.\d+)?)%", r"\\SI{\1}{\\percent}", legend_text)
+        legend_text_escaped = re.sub(r"(\d+(\.\d+)?)%",
+                                     r"\\SI{\1}{\\percent}",
+                                     legend_text).replace("+-\\SI{", "\\SI{+-")
         content.append(f"\\addlegendentry{{{legend_text_escaped}}}\n")
 
     return data, content
