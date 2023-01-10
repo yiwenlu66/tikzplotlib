@@ -1,4 +1,5 @@
 import matplotlib as mpl
+import math
 import numpy as np
 import re
 from matplotlib.backends.backend_pgf import (
@@ -625,10 +626,16 @@ def _get_ticks(data, xy, ticks, ticklabels):
         pgfplots_ticks.append(tick)
 
     # if the labels are all missing, then we need to output an empty set of labels
-    if len(ticklabels) == 0 and len(ticks) != 0:
+    data[f"nticks_{xy}"] = len(ticks)
+    if len(ticklabels) == 0 and len(ticks) != 0 and "minor" not in xy:
         axis_options.append(f"{xy}ticklabels={{}}")
         # remove the multiplier too
-        axis_options.append(f"scaled {xy} ticks=" + r"manual:{}{\pgfmathparse{#1}}")
+    elif "minor" in xy and len(ticks) != 0:
+        xy_ = xy.split()[1]
+        if data[f"nticks_{xy_}"] != 0:
+            multiplier = 5 * math.ceil(len(ticks)/data[f"nticks_{xy_}"]/5)
+            axis_options.append(f"minor {xy_} tick num={multiplier}")
+            axis_options.append(f"% {data[f'nticks_{xy_}']}; {len(ticks)}")
 
     # Leave the ticks to PGFPlots if not in STRICT mode and if there are no explicit
     # labels.
@@ -640,9 +647,8 @@ def _get_ticks(data, xy, ticks, ticklabels):
                     xy, ",".join([f"{el:{ff}}" for el in pgfplots_ticks])
                 )
             )
-        else:
-            val = "{}" if "minor" in xy else "\\empty"
-            axis_options.append(f"{xy}tick={val}")
+        elif "minor" not in xy:
+            axis_options.append(f"{xy}tick=\\empty")
 
         if is_label_required:
             length = sum(len(label) for label in pgfplots_ticklabels)
