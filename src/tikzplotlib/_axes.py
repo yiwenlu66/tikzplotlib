@@ -12,6 +12,16 @@ def _common_texification(string):
     # Work around <https://github.com/matplotlib/matplotlib/issues/15493>
     return mpl_common_texification(string).replace("&", "\\&")
 
+def _siunitx_texification(string: str) -> str:
+    string = re.sub(r"\smm", r" \\si{\\mm}", string)
+    string = re.sub(r"\s°C", r" \\si{\\celsius}", string)
+    string = re.sub(r"\sA/s", r" \\si{\\angstrom\\per\\second}", string)
+    string = re.sub(r"\sg/s", r" \\si{\\gram\\per\\second}", string)
+    string = re.sub(r"\shour", r" \\si{\\hour}", string)
+    string = re.sub(r"\scc", r" \\si{\\cc}", string)
+    string = re.sub(r"\s\\%", r" \\si{\\percent}", string)
+    return string
+
 
 class Axes:
     def __init__(self, data, obj):  # noqa: C901
@@ -50,9 +60,9 @@ class Axes:
         xlabel = obj.get_xlabel()
         if xlabel:
             xlabel = _common_texification(xlabel)
+            xlabel = _siunitx_texification(xlabel)
 
             labelcolor = obj.xaxis.label.get_c()
-            xlabel = re.sub(r"\smm", r" \\si{\\mm}", xlabel)
             xlabel_spl = xlabel.split(",")
             if len(xlabel_spl) == 2:
                 xlabel = ",".join(["$" + xlabel_spl[0].replace(" ", "\\ ") + "$",
@@ -71,10 +81,13 @@ class Axes:
         ylabel = obj.get_ylabel()
         if ylabel:
             ylabel = _common_texification(ylabel)
+            ylabel = _siunitx_texification(ylabel)
 
             ylabel_spl = ylabel.split(",")
             if len(ylabel_spl) == 2:
-                ylabel = ",".join(["$" + ylabel_spl[0].replace(" ", "\\ ") + "$",
+                ylabel = ",".join(["$" + ylabel_spl[0].replace(" ",
+                    "\\ ").replace("+-", r"\pm").replace("-",
+                    r"\mhyphen ") + "$",
                                    ylabel_spl[1]])
 
             labelcolor = obj.yaxis.label.get_c()
