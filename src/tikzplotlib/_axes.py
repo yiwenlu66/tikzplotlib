@@ -354,6 +354,8 @@ class Axes:
             self.axis_options.append("xmajorgrids")
         if has_minor_xgrid:
             self.axis_options.append("xminorgrids")
+            # No way to check from the axis the actual style of the minor grid
+            self.axis_options.append("minor x grid style={gray!20}")
 
         xlines = obj.get_xgridlines()
         if xlines:
@@ -366,6 +368,8 @@ class Axes:
             self.axis_options.append("ymajorgrids")
         if has_minor_ygrid:
             self.axis_options.append("yminorgrids")
+            # No way to check from the axis the actual style of the minor grid
+            self.axis_options.append("minor y grid style={gray!20}")
 
         ylines = obj.get_ygridlines()
         if ylines:
