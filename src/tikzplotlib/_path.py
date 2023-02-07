@@ -303,7 +303,7 @@ def draw_pathcollection(data, obj):
 
         plot_table = []
         plot_table.append("  ".join(labels) + "\n")
-        for row in dd_strings:
+        for row in dd_strings[::data["every n dot"]]:
             plot_table.append(" ".join(row) + "\n")
 
         if data["externalize tables"]:
