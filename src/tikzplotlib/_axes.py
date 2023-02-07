@@ -17,6 +17,7 @@ def _siunitx_texification(string: str) -> str:
     string = re.sub(r"\smm", r" \\si{\\mm}", string)
     string = re.sub(r"\s°C", r" \\si{\\celsius}", string)
     string = re.sub(r"\sA/s", r" \\si{\\angstrom\\per\\second}", string)
+    string = re.sub(r"\sAngstrom", r" \\si{\\angstrom}", string)
     string = re.sub(r"\sg/s", r" \\si{\\gram\\per\\second}", string)
     string = re.sub(r"\shour", r" \\si{\\hour}", string)
     string = re.sub(r"\scc", r" \\si{\\cc}", string)
