@@ -231,7 +231,7 @@ def draw_pathcollection(data, obj):
 
     is_contour = len(dd) == 1
     if is_contour:
-        draw_options = ["draw=none"]
+        draw_options = ["thick"]
 
     if marker0 is not None:
         data, pgfplots_marker, marker_options = _mpl_marker2pgfp_marker(
