@@ -101,7 +101,7 @@ def draw_line2d(data, obj):
     content += c
 
     if legend_text is not None:
-        legend_text_escaped = re.sub(r"(\d+(\.\d+)?)%",
+        legend_text_escaped = re.sub(r"(\d+(\.\d+)?)\s?%",
                                      r"\\SI{\1}{\\percent}",
                                      legend_text).replace("+-\\SI{",
                                      "\\SI{+-").replace(", s",
