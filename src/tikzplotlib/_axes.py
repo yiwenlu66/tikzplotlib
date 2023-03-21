@@ -239,6 +239,8 @@ class Axes:
         else:
             # TODO keep an eye on https://tex.stackexchange.com/q/480058/13262
             pass
+        if data["axis_equal"]:
+            self.axis_options.append("axis equal")
 
     def _ticks(self, data, obj):
         # get ticks
