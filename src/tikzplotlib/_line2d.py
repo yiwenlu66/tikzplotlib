@@ -279,7 +279,8 @@ def _table(obj, data):  # noqa: C901
             data["current axes"].axis_options.append("unbounded coords=jump")
 
     plot_table = [
-        f"{x:{xformat}}{col_sep}{y:{ff}}{table_row_sep}" for x, y in zip(xdata, ydata)
+        f"{x:{xformat}}{col_sep}{y:{ff}}{table_row_sep}" for x, y in zip(
+            xdata[::data["every n dot"]], ydata[::data["every n dot"]])
     ]
 
     min_extern_length = 3
