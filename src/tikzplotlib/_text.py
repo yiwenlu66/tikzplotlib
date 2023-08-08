@@ -59,7 +59,8 @@ def draw_text(data, obj):
 
         if obj.axes:
             # If the coordinates are relative to an axis, use `axis cs`.
-            tikz_pos = f"(axis cs:{pos[0]:{ff}},{pos[1]:{ff}})"
+            rel = "rel " if abs(pos[0]) < 1 and abs(pos[1]) < 1 else ""
+            tikz_pos = f"({rel}axis cs:{pos[0]:{ff}},{pos[1]:{ff}})"
         else:
             # relative to the entire figure, it's a getting a littler harder. See
             # <http://tex.stackexchange.com/a/274902/13262> for a solution to the
