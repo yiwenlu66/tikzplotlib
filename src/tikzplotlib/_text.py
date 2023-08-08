@@ -151,7 +151,7 @@ def draw_text(data, obj):
         text = text.replace("\n ", "\\\\")
 
     props = ",\n  ".join(properties)
-    text = " ".join(style + [text])
+    text = escape_text(" ".join(style + [text])).replace("\n", "\\\\")
     content.append(f"\\draw {tikz_pos} node[\n  {props}\n]{{{text}}};\n")
     return data, content
 
