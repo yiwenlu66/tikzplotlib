@@ -273,10 +273,15 @@ def _table(obj, data):  # noqa: C901
         if "unbounded coords=jump" not in data["current axes"].axis_options:
             data["current axes"].axis_options.append("unbounded coords=jump")
 
-    plot_table = [
-        f"{x:{xformat}}{col_sep}{y:{ff}}{table_row_sep}" for x, y in zip(
-            xdata[::data["every n dot"]], ydata[::data["every n dot"]])
-    ]
+    if len(xdata) > data["every n dot"]:
+        plot_table = [
+            f"{x:{xformat}}{col_sep}{y:{ff}}{table_row_sep}" for x, y in zip(
+                xdata[::data["every n dot"]],
+                ydata[::data["every n dot"]])]
+    else:
+        plot_table = [
+            f"{x:{xformat}}{col_sep}{y:{ff}}{table_row_sep}" for x, y in zip(xdata, ydata)]
+
 
     min_extern_length = 3
 
