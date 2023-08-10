@@ -35,9 +35,10 @@ def escape_text(text):
     The output will be: "The efficiency is \\SI{45}{\\percent} and
     the tolerance is \\SI{+-2}{\\degree}, \\SI{\s}"
     """
-    return re.sub(r"(\d+(\.\d+)?)\s?%", r"\\SI{\1}{\\percent}",
-                  text).replace("+-\\SI{", "\\SI{+-").replace(", s",
-                                ", \\SI{\\s}")
+    res_text = re.sub(r"(\d+(\.\d+)?)\s?%", r"\\SI{\1}{\\percent}", text)
+    res_text = re.sub(r"(\d+(\.\d+)?)\s?mm", r"\\SI{\1}{\\mm}", res_text)
+    res_text = re.sub(r"(\d+(\.\d+)?)\s?deg", r"\\SI{\1}{\\degree}", res_text)
+    return res_text.replace("+-\\SI{", "\\SI{+-").replace(", s", ", \\SI{\\s}")
 
 
 def draw_text(data, obj):
