@@ -20,6 +20,7 @@ def _siunitx_texification(string: str) -> str:
     string = re.sub(r"\sAngstrom", r" \\si{\\angstrom}", string)
     string = re.sub(r"\sg/s", r" \\si{\\gram\\per\\second}", string)
     string = re.sub(r"\shour", r" \\si{\\hour}", string)
+    string = re.sub(r"(\d+(\.\d+)?)\s?cc", r"\\SI{\1}{\\cc}", string)
     string = re.sub(r"\scc", r" \\si{\\cc}", string)
     string = re.sub(r"\s\\%", r" \\si{\\percent}", string)
     string = re.sub(r"\sg/um", r" \\si{\\g\\per\\um}", string)
