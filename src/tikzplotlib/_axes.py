@@ -58,6 +58,7 @@ class Axes:
         data["current axis title"] = title
         if title:
             title = _common_texification(title)
+            title = _siunitx_texification(title)
             self.axis_options.append(f"title={{{title}}}")
 
         # get axes titles
