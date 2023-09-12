@@ -24,6 +24,7 @@ def _siunitx_texification(string: str) -> str:
     string = re.sub(r"\scc", r" \\si{\\cc}", string)
     string = re.sub(r"\s\\%", r" \\si{\\percent}", string)
     string = re.sub(r"\sg/um", r" \\si{\\g\\per\\um}", string)
+    string = re.sub(r"(\d+(\.\d+)?)\s?deg", r"\\SI{\1}{\\degree}", string)
     return string
 
 
