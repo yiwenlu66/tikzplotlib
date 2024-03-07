@@ -2,16 +2,14 @@ import matplotlib as mpl
 import math
 import numpy as np
 import re
-from matplotlib.backends.backend_pgf import (
-    common_texification as mpl_common_texification,
-)
+from matplotlib.backends.backend_pgf import _tex_escape as mpl_tex_escape
 
 from . import _color
 
 
-def _common_texification(string):
+def _tex_escape(string):
     # Work around <https://github.com/matplotlib/matplotlib/issues/15493>
-    return mpl_common_texification(string).replace("&", "\\&")
+    return mpl_tex_escape(string).replace("&", "\\&")
 
 def _siunitx_texification(string: str) -> str:
     string = re.sub(r"\smm", r" \\si{\\mm}", string)
@@ -58,14 +56,14 @@ class Axes:
         title = obj.get_title()
         data["current axis title"] = title
         if title:
-            title = _common_texification(title)
+            title = _tex_escape(title)
             title = _siunitx_texification(title)
             self.axis_options.append(f"title={{{title}}}")
 
         # get axes titles
         xlabel = obj.get_xlabel()
         if xlabel:
-            xlabel = _common_texification(xlabel)
+            xlabel = _tex_escape(xlabel)
             xlabel = _siunitx_texification(xlabel)
 
             labelcolor = obj.xaxis.label.get_c()
@@ -86,7 +84,7 @@ class Axes:
 
         ylabel = obj.get_ylabel()
         if ylabel:
-            ylabel = _common_texification(ylabel)
+            ylabel = _tex_escape(ylabel)
             ylabel = _siunitx_texification(ylabel)
 
             ylabel_spl = ylabel.split(",")
@@ -630,7 +628,7 @@ def _get_ticks(data, xy, ticks, ticklabels):
         label = ticklabel.get_text()
         if "," in label:
             label = "{" + label + "}"
-        pgfplots_ticklabels.append(_common_texification(label))
+        pgfplots_ticklabels.append(_tex_escape(label))
 
     # note: ticks may be present even if labels are not, keep them for grid lines
     for tick in ticks:
