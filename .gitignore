@@ -12,3 +12,5 @@ build/
 .tox/
 mytikz.tex
 test.tex
+
+tikzplotlib.txt
