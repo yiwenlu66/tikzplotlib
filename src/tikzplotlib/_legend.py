@@ -79,8 +79,8 @@ def draw_legend(data, obj):
         data["current axes"].axis_options.append(f"legend cell align={{{alignment}}}")
 
     try:
-        if obj._ncol != 1:
-            data["current axes"].axis_options.append(f"legend columns={obj._ncol}")
+        if obj._ncols != 1:
+            data["current axes"].axis_options.append(f"legend columns={obj._ncols}")
     except AttributeError:
         warnings.warn("Unable to interrogate the number of columns in legend. Using 1 as default.")
 
